@@ -1,5 +1,5 @@
 {
-  "name": "webpack-boilerplate",
+  "name": "react-stylish-gallery",
   "version": "0.0.1",
   "description": "Easy to use React components for creating beautiful gallery",
   "main": "dist/index.js",
