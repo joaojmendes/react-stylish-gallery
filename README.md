@@ -38,7 +38,7 @@ export default () => (
 
 ### Galley properties
 
-**Description**: Wrap your Image components inside the Gallery. Use it only if you have 2 or more Image components.
+*Description*: Wrap your Image components inside the Gallery. Use it only if you have 2 or more Image components.
 
 | Prop Name | Type    | Default | Requierd | Description                                                                                                   |
 |-----------|---------|---------|----------|---------------------------------------------------------------------------------------------------------------|
@@ -49,7 +49,7 @@ export default () => (
 
 #### Theme object properties
 
-**Note**: This object applies style only to the Modal component!
+*Note*: This object applies style only to the Modal component!
 
 | Prop Name          | Type   | Default | Unit       | Options                                      | Description                                |
 |--------------------|--------|---------|------------|----------------------------------------------|--------------------------------------------|
@@ -62,9 +62,11 @@ export default () => (
 | rightIconName      | string |         |            |                                              | Sets the name of right side icon.          |
 | leftIconName       | string |         |            |                                              | Sets the name of the left side icon.       |
 
+----------
+
 ### Image properties
 
-**Description**: This is the component which contains the actual image. Adjust the size to change the space occupied by the flex.
+*Description*: This is the component which contains the actual image. Adjust the size to change the space occupied by the flex.
 
 | Prop Name | Type   | Default   | Requierd | Definition                                   |
 |-----------|--------|-----------|----------|----------------------------------------------|
@@ -88,7 +90,7 @@ export default () => (
 
 ### Overlay properties
 
-**Description**: Use to add an overlay over the Image component which can also display a text.
+*Description*: Use to add an overlay over the Image component which can also display a text.
 
 | Prop Name | Type   | Default   | Requierd | Description                            |
 |-----------|--------|-----------|----------|----------------------------------------|
@@ -107,3 +109,7 @@ export default () => (
 | opacity                 | number | 0.5     |            |                                                                          | Sets the opacity of the background                  |
 | fontSize                | number | 3       | rem        |                                                                          | Sets the font size of the title                     |
 | color                   | string | #fff    |            |                                                                          | Sets the color of the title                         |
+
+----------
+
+*Copyright (c) 2017 Nichita-Alexandru Sindie*
