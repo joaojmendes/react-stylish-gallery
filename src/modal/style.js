@@ -7,7 +7,7 @@ export default (theme: Object) => ({
   ...entrances(theme),
   ...exits(theme),
   modal: {
-    background: '#000',
+    background: theme.background || '#000',
     position: 'fixed',
     opacity: 0.6,
     top: 0,
@@ -15,14 +15,6 @@ export default (theme: Object) => ({
     bottom: 0,
     right: 0,
     'z-index': 1000,
-  },
-  scaleUpInital: {
-    transform: 'translate(-50%, -50%) scale(0, 0)',
-  },
-  entrances: {
-    test: {
-      background: '#fff',
-    }
   },
   hidden: {
     visibility: 'hidden',
@@ -45,10 +37,6 @@ export default (theme: Object) => ({
     left: '-50%',
     transform: 'translate(50%, 50%)',
     overflow: 'hidden',
-  },
-  image: {
-    width: '100%',
-    height: '100%',
   },
   navLeft: {
     top: '50%',

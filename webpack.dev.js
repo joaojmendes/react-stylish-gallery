@@ -1,6 +1,6 @@
 const webpack = require('webpack')
 const merge = require('webpack-merge')
-
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const common = require('./webpack.common.js')
 
 
@@ -20,6 +20,9 @@ module.exports = merge(common, {
   // HMR plugin
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
+    new HtmlWebpackPlugin({
+      title: 'Development'
+    }),
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('development')

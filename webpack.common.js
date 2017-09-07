@@ -1,5 +1,5 @@
 const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const webpack = require('webpack')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 module.exports = {
@@ -7,19 +7,16 @@ module.exports = {
   entry: [
     'babel-polyfill',
     'react-hot-loader/patch',
-    './src/index'
+    './src/index.jsx'
   ],
   // Output
   output: {
-    filename: '[name].bundle.js',
+    filename: 'index.bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
   // Plugins
   plugins: [
     new CleanWebpackPlugin(['dist']),
-    new HtmlWebpackPlugin({
-      title: 'Production'
-    }),
   ],
   module: {
     rules: [
@@ -44,28 +41,6 @@ module.exports = {
         use: [
           'file-loader'
         ]
-      },
-      // Fonts
-      {
-        test: /\.(woff|woff2|eot|ttf|otf)$/,
-        use: [
-          'file-loader'
-        ]
-      },
-      // Data loader
-      // CSV
-      {
-        test: /\.csv$/,
-        use: [
-          'csv-loader',
-        ],
-      },
-      // XML loader
-      {
-        test: /\.xml$/,
-        use: [
-          'xml-loader',
-        ],
       },
     ]
   },

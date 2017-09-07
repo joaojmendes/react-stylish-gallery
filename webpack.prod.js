@@ -7,11 +7,12 @@ const common = require('./webpack.common.js')
 
 module.exports = merge(common, {
   entry: {
-    index: './src/production.js'
+    index: './src/production.jsx'
   },
   output: {
-    filename: '[name].js',
-    path: path.resolve(__dirname, 'dist')
+    filename: '[name].bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+    libraryTarget: 'commonjs2'
   },
   devtool: 'source-map',
   plugins: [

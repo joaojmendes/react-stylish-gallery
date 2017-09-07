@@ -27,6 +27,14 @@ class Modal extends React.Component {
     closeModal: Function,
     getNextImage: Function,
     selectedImage: Map,
+    theme: {
+      animationExit: string,
+      animationEntrance: string,
+      rightIconClassName: string,
+      rightIconName: string,
+      leftIconClassName: string,
+      leftIconName: string,
+    },
     classes: {
       modal: string,
       content: string,
@@ -62,6 +70,7 @@ class Modal extends React.Component {
           [classes[`${theme.animationExit}Exit`]]: exits
         })}
         >
+
           <NavArrow
             iconContainerClassName={classNames({
               [classes.iconContainer]: true,
@@ -88,6 +97,7 @@ class Modal extends React.Component {
             order="next"
             onClick={this.getNextImage}
           />
+
           <div className={classes.content}>
             <Image
               src={selectedImage.get('src')}

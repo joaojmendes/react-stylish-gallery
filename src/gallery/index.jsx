@@ -10,13 +10,14 @@ import Modal from '../modal'
 import addIdField from '../utiles/addIdField'
 import findImageById from '../utiles/findImageById'
 import getIndex from '../utiles/getIndex'
+import uniqueIdGenerator from '../utiles/uniqueIdGenerator'
 
 // flow-disable-next-line
 class Gallery extends React.Component {
   constructor(props: Object) {
     super(props)
     this.state = {
-      images: this.setImages(),
+      images: this.setImages().toJS(),
       selectedImage: '',
     }
     this.selectImage = this.selectImage.bind(this)
@@ -25,7 +26,7 @@ class Gallery extends React.Component {
   }
 
   selectImage(id: string): void {
-    const { images } = this.state
+    const images = fromJS(this.state.images)
     this.setState({ selectedImage: findImageById(images, id) })
   }
 
@@ -33,9 +34,10 @@ class Gallery extends React.Component {
     this.setState({ selectedImage: '' })
   }
 
+
+
   setImages(): Immutable {
-    if (this.props.images) return addIdField(this.props.images)
-    if (this.props.children) return addIdField(addIdField(this.makeListOfChildrenProps()))
+    if (this.props.children) return addIdField(this.makeListOfChildrenProps())
     return undefined
   }
 
@@ -49,12 +51,11 @@ class Gallery extends React.Component {
 
   // Get Next Image (forward or backward)
   getNextImage(infinite: boolean = this.props.infinite, order: string): Immutable {
-    console.log(process.env.NODE_ENV)
-    const { images } = this.state
+    const images = fromJS(this.state.images)
     const selectedId = this.state.selectedImage.get('id')
     const index = getIndex(images, selectedId)
-    const length = this.state.images.size
-    const animationTime = this.props.theme.modalSettings.animationTime * 1000
+    const length = images.size
+    const animationTime = this.props.theme ? this.props.theme.animationTime * 1000 : 0
 
     const nextImg = (images, index) => images.get(index + 1)
     const prevImg = (images, index) => images.get(index - 1)
@@ -89,9 +90,16 @@ class Gallery extends React.Component {
     }
   }
 
+ enhanceChildren(children, onClick) {
+   return fromJS(children)
+   .map(t => t.setIn(['props', 'selectImage'], onClick))
+   .map(t => t.setIn(['props', 'id'], uniqueIdGenerator()))
+   .toJS()
+  }
+
+
   props: {
-    children: Object,
-    images: Array<mixed>,
+    children: Array,
     theme: Object,
     withModal: boolean,
     infinite: boolean
@@ -100,34 +108,33 @@ class Gallery extends React.Component {
   render () {
     const { withModal } = this.props
     const imageSettings = (t) => ({
-      key: t.get('id'),
-      src: t.get('src'),
-      alt: t.get('alt'),
-      size: t.get('size'),
-      hover: t.get('hover'),
-      title: t.get('title'),
-      id: t.get('id'),
+      key: t.id,
+      id: t.id,
+      src: t.src,
+      alt: t.alt,
+      size: t.size,
+      theme: t.theme,
+      className: t.className,
+      onClick: t.onClick,
+      selectImage: this.selectImage,
+      children: t.children,
     })
     return (
       <div className="row">
         {
           this.state.selectedImage && withModal &&
             <Modal
-              theme={this.props.theme.modalSettings}
+              theme={this.props.theme || {}}
               selectedImage={this.state.selectedImage}
               closeModal={this.closeModal}
               getNextImage={this.getNextImage}
-              images={this.state.images}
             />
         }
         {
-          this.state.images && this.state.images.map(t =>
-            <Image
-              {...imageSettings(t)}
-              theme={this.props.theme}
-              onClick={this.selectImage}
-            />
-          )
+          this.state.images.map(t =>
+          <Image
+            {...imageSettings(t)}
+          />)
         }
       </div>
     )

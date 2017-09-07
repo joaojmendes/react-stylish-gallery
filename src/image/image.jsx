@@ -5,54 +5,54 @@ import injectSheet from 'react-jss'
 import classNames from 'classnames'
 
 import style from './style'
-import Overlay from './overlay'
+import Overlay from '../overlay'
 
 type Props = {
-  theme: Object,
+  theme: {
+    padding: string,
+    height: string,
+  },
   classes: Object,
   size: number,
   src: string,
   alt: string,
   id: string,
+  modal: boolean,
   className?: string,
-  title?: string,
-  hover?: boolean,
-  modal?: boolean,
   onClick: Function,
+  children: Function,
 }
 
 
 
-const Image = ({ classes, size, className, src, alt, title, hover, id, onClick, modal, theme }: Props) => (
+const enhanceChildren = (children, selectImage, onClick, id) => ({
+  ...children,
+  props: {
+    ...children.props,
+    selectImage,
+    onClick,
+    id,
+  }
+})
+
+const Image = ({ classes, size, className, src, alt, id, onClick, selectImage, modal, theme, children }: Props) => (
   <div
     className={classNames({
-      [`col-md-${size}`]: true,
+      [`col-md-${size || 4}`]: !modal,
       'col-xs-12': true,
       [classes.gridContainer]: true,
     })}
   >
-    <div
-      className={classNames({
-        [classes.imageContainer]: true,
-        [classes[`${theme.overlay.animationName}Overlay`]]: hover && !modal,
-      })}
-    >
-      {hover && !modal && (
-        <Overlay
-          hover={hover}
-          overlayClass={classNames({
-            [classes.overlayContent]: hover,
-            [classes[`${theme.overlay.animationName}OverlayContent`]]: hover,
-          })}
-          id={id}
-          onClick={onClick}
-        />
-      )}
+    <div className={classes.imageContainer}>
+      {!modal && enhanceChildren(children, selectImage, onClick, id)}
       <img
-        className={`${className} ${classes.image}`}
+        className={classNames({
+          [className]: className,
+          [classes.image]: true,
+        })}
         src={src}
         alt={alt}
-        onClick={() => !modal && onClick(id)}
+        onClick={() => !modal && onClick()}
       />
     </div>
   </div>
