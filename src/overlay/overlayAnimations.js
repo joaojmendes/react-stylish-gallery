@@ -1,23 +1,22 @@
 // @flow
 
 const commonFields = ({
-    position,
-    content,
-    animationTime,
-    animationTimingFunction,
-    background,
-    opacity
-  }) => ({
-    position: position || 'absolute',
-    content: content || '""',
-    transition: `${animationTime || 0.4}s ${animationTimingFunction || 'ease-in'}`,
-    background: background || '#000',
-    opacity: opacity || 0.5,
+  position,
+  content,
+  animationTime,
+  animationTimingFunction,
+  background,
+  opacity,
+}: Object) => ({
+  position: position || 'absolute',
+  content: content || '""',
+  transition: `${animationTime || 0.4}s ${animationTimingFunction || 'ease-in'}`,
+  background: background || '#000',
+  opacity: opacity || 0.5,
 })
 
 
-
-export default (theme: Object): Object => ({
+export default (theme: Object) => ({
   // Slide Right
   slideRight: {
     '&::before': {
@@ -30,7 +29,7 @@ export default (theme: Object): Object => ({
         animationTimingFunction: theme.animationTimingFunction,
         background: theme.background,
         opacity: theme.opacity,
-      })
+      }),
     },
     '&:hover::before': {
       width: '100%',
@@ -65,7 +64,7 @@ export default (theme: Object): Object => ({
         animationTimingFunction: theme.animationTimingFunction,
         background: theme.background,
         opacity: theme.opacity,
-      })
+      }),
     },
     '&:hover::before': {
       width: '100%',
@@ -91,7 +90,7 @@ export default (theme: Object): Object => ({
   // Slide Down
   slideDown: {
     '&::before': {
-      top:0,
+      top: 0,
       right: 0,
       left: 0,
       height: 0,
@@ -100,7 +99,7 @@ export default (theme: Object): Object => ({
         animationTimingFunction: theme.animationTimingFunction,
         background: theme.background,
         opacity: theme.opacity,
-      })
+      }),
     },
     '&:hover::before': {
       height: '100%',
@@ -135,7 +134,7 @@ export default (theme: Object): Object => ({
         animationTimingFunction: theme.animationTimingFunction,
         background: theme.background,
         opacity: theme.opacity,
-      })
+      }),
     },
     '&:hover::before': {
       height: '100%',
@@ -171,7 +170,7 @@ export default (theme: Object): Object => ({
         animationTimingFunction: theme.animationTimingFunction,
         background: theme.background,
         opacity: '0',
-      })
+      }),
     },
     '&:hover::before': {
       opacity: theme.opacity || 0.5,
@@ -192,6 +191,6 @@ export default (theme: Object): Object => ({
       content: `"${theme.overlayTitle || ''}"`,
       textAlign: 'center',
       opacity: 1,
-    }
-  }
+    },
+  },
 })

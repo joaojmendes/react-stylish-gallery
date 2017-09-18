@@ -3,16 +3,39 @@
 import React from 'react'
 import injectSheet from 'react-jss'
 import classNames from 'classnames'
-import type { Map } from 'immutable'
 
 import Image from '../image'
 import NavArrow from './nav-arrow'
-// import Navigation from './navigation'
 import style from './style'
 
 
+type State = {
+  selectedImage: Object,
+  exits: boolean,
+  animationEntrance: string,
+  animationExit: string
+}
 
-class Modal extends React.Component {
+type Props = {
+  closeModal: Function,
+  getNextImage: Function,
+  selectedImage: Object,
+  theme: {
+    animationExit: string,
+    animationEntrance: string,
+    rightIconClassName: string,
+    rightIconName: string,
+    leftIconClassName: string,
+    leftIconName: string,
+  },
+  classes: {
+    modal: string,
+    content: string,
+    contentContainer: string,
+  }
+}
+
+class Modal extends React.Component<void, Props, State> {
   constructor(props) {
     super(props)
     this.state = {
@@ -23,31 +46,9 @@ class Modal extends React.Component {
     }
     this.getNextImage = this.getNextImage.bind(this)
   }
-  props: {
-    closeModal: Function,
-    getNextImage: Function,
-    selectedImage: Map,
-    theme: {
-      animationExit: string,
-      animationEntrance: string,
-      rightIconClassName: string,
-      rightIconName: string,
-      leftIconClassName: string,
-      leftIconName: string,
-    },
-    classes: {
-      modal: string,
-      content: string,
-      contentContainer: string,
-    }
-  }
 
   componentWillReceiveProps(nextProps) {
     this.setState({ selectedImage: nextProps.selectedImage })
-  }
-
-  scaleDown() {
-    this.setState({ exits: true }, () => console.log(this.state))
   }
 
   getNextImage(order: string) {
@@ -67,7 +68,7 @@ class Modal extends React.Component {
         <div className={classNames({
           [classes.contentContainer]: true,
           [classes[`${theme.animationEntrance}Entrance`]]: selectedImage && !exits,
-          [classes[`${theme.animationExit}Exit`]]: exits
+          [classes[`${theme.animationExit}Exit`]]: exits,
         })}
         >
 
@@ -77,7 +78,7 @@ class Modal extends React.Component {
               [classes.navLeft]: true,
             })}
             iconClassName={classNames({
-              [theme.leftIconClassName]: true,
+              [theme.leftIconClassName]: theme.leftIconClassName && true,
               [classes.icon]: true,
             })}
             iconName={theme.leftIconName}
@@ -90,7 +91,7 @@ class Modal extends React.Component {
               [classes.navRight]: true,
             })}
             iconClassName={classNames({
-              [theme.rightIconClassName]: true,
+              [theme.rightIconClassName]: theme.rightIconClassName && true,
               [classes.icon]: true,
             })}
             iconName={theme.rightIconName}

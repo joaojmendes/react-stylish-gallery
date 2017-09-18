@@ -3,17 +3,36 @@
 import React from 'react'
 import { fromJS } from 'immutable'
 import type { fromJS as Immutable } from 'immutable'
+// eslint-disable-next-line
 import 'flexboxgrid'
 
 import Image from '../image'
 import Modal from '../modal'
 import addIdField from '../utiles/addIdField'
 import findImageById from '../utiles/findImageById'
-import getIndex from '../utiles/getIndex'
-import uniqueIdGenerator from '../utiles/uniqueIdGenerator'
+import selectNextImage from '../utiles/selectNextImage'
+
+type Props = {
+    children: Array<mixed>,
+    theme: Object,
+    withModal: boolean,
+    infinite: boolean,
+    images: Object,
+    selectedImage: Object,
+  }
+
+type State = {
+    images: Object,
+    selectedImage: Object
+  }
 
 // flow-disable-next-line
-class Gallery extends React.Component {
+class Gallery extends React.Component<void, Props, State> {
+  getNextImage: Function
+  closeModal: Function
+  selectImage: Function
+
+
   constructor(props: Object) {
     super(props)
     this.state = {
@@ -25,9 +44,14 @@ class Gallery extends React.Component {
     this.getNextImage = this.getNextImage.bind(this)
   }
 
-  selectImage(id: string): void {
-    const images = fromJS(this.state.images)
-    this.setState({ selectedImage: findImageById(images, id) })
+  selectImage(id: string) {
+    const state = this.state
+    if (state) {
+      if (state.images) {
+        const images = fromJS(state.images)
+        this.setState({ selectedImage: findImageById(images, id) })
+      }
+    }
   }
 
   closeModal(): void {
@@ -35,79 +59,61 @@ class Gallery extends React.Component {
   }
 
 
-
   setImages(): Immutable {
-    if (this.props.children) return addIdField(this.makeListOfChildrenProps())
+    if (this.props && this.props.children) {
+      return addIdField(this.makeListOfChildrenProps())
+    }
     return undefined
   }
 
   makeListOfChildrenProps(): Immutable {
-    const children = fromJS(this.props.children)
-    return children.reduce((acc, curr, i) => {
-      return acc.push(curr.get('props'))
-    }, fromJS([]))
+    if (this.props && this.props.children) {
+      const children = fromJS(this.props.children)
+      return children.reduce((acc, curr) =>
+        acc.push(curr.get('props'))
+        , fromJS([]))
+    }
+    return fromJS([])
   }
 
 
   // Get Next Image (forward or backward)
   getNextImage(infinite: boolean = this.props.infinite, order: string): Immutable {
-    const images = fromJS(this.state.images)
-    const selectedId = this.state.selectedImage.get('id')
-    const index = getIndex(images, selectedId)
-    const length = images.size
-    const animationTime = this.props.theme ? this.props.theme.animationTime * 1000 : 0
+    const state = this.state
+    const props = this.props
+    if (state !== undefined && props !== undefined) {
+      const images = state.images
+      const selectedImage = state.selectedImage
+      const theme = props.theme
+      const animationTime = theme ? theme.animationTime * 1000 : 0
 
-    const nextImg = (images, index) => images.get(index + 1)
-    const prevImg = (images, index) => images.get(index - 1)
-    const selectNextImg = (order: string, infinite: boolean) => {
-      if (infinite) {
-        if (order === 'next') return images.get(0)
-        if (order === 'prevoius') return images.get(length - 1)
-      }
-      if (order === 'next') return nextImg(images, index)
-      else if (order === 'previous') return prevImg(images, index)
-      else return false
-    }
+      const nextImage = selectNextImage(images, selectedImage, infinite ,order)
 
-    // Add a timeout so the transition has time to end
-    const timeout = (resolve) => setTimeout(() => {
-      resolve(this.setState({ selectedImage: '' }))
-    }, animationTime)
+      // Add a timeout so the transition has time to end
+      const timeout = (resolve: Function) => setTimeout(() => {
+        resolve(this.setState({ selectedImage: '' }))
+      }, animationTime)
 
 
-    if((index !== length - 1 && order === 'next') || (index !== 0 && order === 'previous')) {
-      new Promise(resolve => {
-        timeout(resolve)
-      })
-      .then(() => this.setState({ selectedImage: selectNextImg(order) }))
-    } else if (infinite){
-      new Promise(resolve => {
-        timeout(resolve)
-      })
-      .then(() => this.setState({ selectedImage: selectNextImg(order, infinite) }))
-    } else {
-      return false
+      if(nextImage) {
+        new Promise((resolve: Function) => {
+          timeout(resolve)
+        })
+          .then(() => this.setState({ selectedImage: nextImage }))
+      } else return false
     }
   }
 
- enhanceChildren(children, onClick) {
-   return fromJS(children)
-   .map(t => t.setIn(['props', 'selectImage'], onClick))
-   .map(t => t.setIn(['props', 'id'], uniqueIdGenerator()))
-   .toJS()
-  }
 
-
-  props: {
-    children: Array,
-    theme: Object,
-    withModal: boolean,
-    infinite: boolean
-  }
-
-  render () {
-    const { withModal } = this.props
-    const imageSettings = (t) => ({
+  render() {
+    const props = this.props
+    let withModal = false
+    let theme = {}
+    if (props) {
+      if (props.withModal) withModal = true
+      if (props.theme) theme = props.theme
+    }
+    const imageSettings = t => ({
       key: t.id,
       id: t.id,
       src: t.src,
@@ -118,23 +124,25 @@ class Gallery extends React.Component {
       onClick: t.onClick,
       selectImage: this.selectImage,
       children: t.children,
-    })
+    }: Object)
     return (
       <div className="row">
         {
           this.state.selectedImage && withModal &&
             <Modal
-              theme={this.props.theme || {}}
+              theme={theme}
               selectedImage={this.state.selectedImage}
               closeModal={this.closeModal}
               getNextImage={this.getNextImage}
             />
         }
         {
-          this.state.images.map(t =>
-          <Image
-            {...imageSettings(t)}
-          />)
+          this.state.images.map(t => (
+            <Image
+              {...imageSettings(t)}
+            />
+          ),
+          )
         }
       </div>
     )

@@ -21,7 +21,7 @@ export default (theme: Object) => ({
     opacity: 0,
   },
   contentContainer: {
-    position: 'absolute',
+    position: 'fixed',
     width: '80%',
     height: '80%',
     top: '50%',

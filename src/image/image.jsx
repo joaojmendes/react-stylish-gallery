@@ -5,37 +5,32 @@ import injectSheet from 'react-jss'
 import classNames from 'classnames'
 
 import style from './style'
-import Overlay from '../overlay'
 
 type Props = {
-  theme: {
-    padding: string,
-    height: string,
-  },
   classes: Object,
   size: number,
   src: string,
   alt: string,
   id: string,
   modal: boolean,
-  className?: string,
+  className: ?string,
   onClick: Function,
   children: Function,
+  selectImage: Function,
 }
 
 
-
-const enhanceChildren = (children, selectImage, onClick, id) => ({
+const enhanceChildren = (children, selectImage, onClick, id): Object => ({
   ...children,
   props: {
     ...children.props,
     selectImage,
     onClick,
     id,
-  }
+  },
 })
 
-const Image = ({ classes, size, className, src, alt, id, onClick, selectImage, modal, theme, children }: Props) => (
+const Image = ({ classes, size, className, src, alt, id, onClick, selectImage, modal, children }: Props) => (
   <div
     className={classNames({
       [`col-md-${size || 4}`]: !modal,
@@ -44,7 +39,7 @@ const Image = ({ classes, size, className, src, alt, id, onClick, selectImage, m
     })}
   >
     <div className={classes.imageContainer}>
-      {!modal && enhanceChildren(children, selectImage, onClick, id)}
+      {!modal && children && enhanceChildren(children, selectImage, onClick, id)}
       <img
         className={classNames({
           [className]: className,
@@ -52,7 +47,10 @@ const Image = ({ classes, size, className, src, alt, id, onClick, selectImage, m
         })}
         src={src}
         alt={alt}
-        onClick={() => !modal && onClick()}
+        onClick={() => {
+          !modal && onClick && onClick()
+          !modal && selectImage(id)
+        }}
       />
     </div>
   </div>

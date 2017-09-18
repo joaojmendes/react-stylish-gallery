@@ -54,7 +54,7 @@ export default () => (
 | Prop Name          | Type   | Default | Unit       | Options                                      | Description                                |
 |--------------------|--------|---------|------------|----------------------------------------------|--------------------------------------------|
 | animationEntrance  | string |         |            | scaleUp | slideDown | slideRight | slideLeft | Sets the entrance animation of the modal.  |
-| animationExit      | string |         |            | sclaeDown | slideDown | slide Right |        | Sets the exit animation of the modal.      |
+| animationExit      | string |         |            | scaleDown | slideDown | slideRight |        | Sets the exit animation of the modal.      |
 | animationTime      | number | 0       | s(seconds) |                                              | Sets the time of the animations.           |
 | background         | string | #000    |            |                                              | Sets the background of the modal.          |
 | rightIconClassName | string |         |            |                                              | Sets the className of the right side icon. |

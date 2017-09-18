@@ -1,8 +1,11 @@
 /src/
 /gh-pages/
-./babelrc
-./eslintrc
-./flowconfig
-./webpack.common.js
-./webpack.dev.js
-./webpack.prod.js
+babelrc
+eslintrc
+flowconfig
+webpack.common.js
+gitignore
+travis.yml
+yarn.lock
+webpack.dev.js
+webpack.prod.js

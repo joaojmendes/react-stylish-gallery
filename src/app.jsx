@@ -8,41 +8,42 @@ import Overlay from './overlay'
 import images from './images'
 
 
-
 const App = () => (
   <div>
     React stylish gallery!
     <Gallery
       withModal
+      infinite
+      theme={{
+        animationTime: 0.4,
+        animationEntrance: 'slideDown',
+        animationExit: 'slideDown'
+      }}
     >
       <Image
         src={images.img1}
         alt="item 1"
-        >
-        <Overlay
-          title="Item 1"
-        />
-      </Image>
+      />
       <Image
         src={images.img2}
         alt="item 1"
-        >
-          <Overlay/>
+      >
+        <Overlay />
       </Image>
       <Image
         src={images.img3}
         alt="item 1"
-        >
-          <Overlay/>
+      >
+        <Overlay />
       </Image>
       <Image
         src={images.img4}
         alt="item 1"
-        >
-          <Overlay/>
+      >
+        <Overlay />
       </Image>
     </Gallery>
   </div>
 )
 
-export default App;
+export default App

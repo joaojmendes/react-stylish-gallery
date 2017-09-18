@@ -23,17 +23,17 @@ type Props = {
 
 const Overlay = ({ id, theme, classes, onClick, selectImage }: Props) => (
   <div
-  className={classNames({
-    [classes.overlayContent]: true,
-    [classes[theme.animationName]]: theme.animationName,
-    [classes.fadeIn]: !theme.animationName,
-  })}
-  onClick={
-    () => {
-      onClick && onClick()
-      selectImage(id)
+    className={classNames({
+      [classes.overlayContent]: true,
+      [classes[theme.animationName]]: theme.animationName,
+      [classes.fadeIn]: !theme.animationName,
+    })}
+    onClick={
+      () => {
+        onClick && onClick()
+        selectImage(id)
+      }
     }
-  }
   />
 )
 
