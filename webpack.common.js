@@ -13,6 +13,7 @@ module.exports = {
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
+    publicPath: path.resolve(__dirname, 'dist'),
     // publicPath: '/dist/',
   },
   // Plugins
@@ -50,12 +51,12 @@ module.exports = {
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
         use: [
-          'file-loader'
+          'file-loader?name=[name].[ext]'
         ]
       },
       // Url loader
       {
-        test: /\.(jpg|jpeg|png|gif|svg)$/,
+        test: /\.(jpg|jpeg|png|gif|svg|woff|woff2|eot|ttf|otf)$/,
         loader: 'url-loader',
         // options: {
         //   limit: 25000,
