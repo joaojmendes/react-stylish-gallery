@@ -1,7 +1,7 @@
 ## Description
 
 Create beautiful responsive image galleries with easy to use React components.
-Check out the [demos](https://nickyzz.github.io/react-stylish-gallery/) for more examples
+Check out the [demos](https://nickyzz.github.io/react-stylish-gallery/) page for more examples
 
 ## Instalation
 
