@@ -3,9 +3,9 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
+import ReactGA from 'react-ga'
 import 'typeface-roboto'
 import './style.css'
-// import 'material-design-icons'
 
 import App from './app'
 
@@ -15,6 +15,8 @@ const test = () => {
   return element
 }
 document.body.appendChild(test())
+
+ReactGA.initialize('UA-106758489-1')
 
 render(
   <AppContainer>

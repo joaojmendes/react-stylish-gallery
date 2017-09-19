@@ -20,7 +20,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(['dist', 'images', 'index.html', 'index.bundle.js']),
     new HtmlWebpackPlugin({
-      title: 'Production'
+      title: 'react-stylish-gallery'
     }),
   ],
   module: {
