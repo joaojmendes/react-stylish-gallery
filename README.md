@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.org/nickyzz/react-stylish-gallery.svg?branch=master?style=flat-square)]
-(https://travis-ci.org/nickyzz/react-stylish-gallery.svg?branch=master)
+![Build Status](https://travis-ci.org/nickyzz/react-stylish-gallery.svg?branch=master?style=flat-square)
 
 ## Description
 
