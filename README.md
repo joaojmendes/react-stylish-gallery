@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/nickyzz/react-stylish-gallery.svg?branch=master?style=flat-square)]
+(https://travis-ci.org/nickyzz/react-stylish-gallery.svg?branch=master)
+
 ## Description
 
 Create beautiful responsive image galleries with easy to use React components.
