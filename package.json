@@ -1,6 +1,6 @@
 {
   "name": "react-stylish-gallery",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Create responsive image galleries with easy to use React components",
   "main": "./dist/index.bundle.js",
   "author": {
@@ -16,10 +16,9 @@
     "react",
     "stylish",
     "gallery",
-    "galleries",
+    "react-gallery",
     "responsive",
-    "image",
-    "modal"
+    "image"
   ],
   "scripts": {
     "start": "webpack-dev-server --open --config webpack.dev.js",
